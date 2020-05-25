@@ -4,26 +4,77 @@
  * g++ -c hello_world.cpp
  * g++ hello_world.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system
  */
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
+using namespace sf;
+
+#define WIN_WIDTH       900.f
+#define WIN_HEIGHT      WIN_WIDTH
+#define CIRCLE_RAD      ((WIN_WIDTH / 3) / 2)
+#define RECT_WIDTH      (WIN_WIDTH / 3)
+#define RECT_HEIGHT     RECT_WIDTH
+
+Vector2f coords[] =
+{
+    // first row
+    Vector2f(0.f, 0.f),
+    Vector2f(300.f, 0.f),
+    Vector2f(600.f, 0.f),
+
+    //second row
+    Vector2f(0.f, 300.f),
+    Vector2f(300.f, 300.f),
+    Vector2f(600.f, 300.f),
+
+    //third row
+    Vector2f(0.f, 600.f),
+    Vector2f(300.f, 600.f),
+    Vector2f(600.f, 600.f),    
+};
+const size_t coords_len = sizeof(coords) / sizeof(Vector2f);
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "Hello World!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Blue);
+    RenderWindow window(VideoMode(WIN_WIDTH, WIN_HEIGHT),
+        "Hello World!");
+    
+    CircleShape circle(CIRCLE_RAD);
+    circle.setFillColor(Color::Blue);
+
+    RectangleShape rect(Vector2f(RECT_WIDTH, RECT_HEIGHT));
+    rect.setFillColor(Color::Red);
+
+    uint32_t coord_idx = 0;
 
     while (window.isOpen())
     {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch (event.type)
+            {
+                case Event::Closed:
+                    window.close();
+                    break;
+                case Event::KeyPressed:
+                    if (event.key.code == Keyboard::Right)
+                    {
+                        coord_idx = (coord_idx + 1) % coords_len;
+                    }
+                    else { /* Some other key */ }
+                    break;
+            }
         }
 
         window.clear();
-        window.draw(shape);
+
+        rect.setPosition(coords[coord_idx]);
+        window.draw(rect);        
+        circle.setPosition(coords[coord_idx]);
+        window.draw(circle);
+        
         window.display();
     }
 
