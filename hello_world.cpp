@@ -10,7 +10,7 @@
 #include <SFML/System/Vector2.hpp>
 using namespace sf;
 
-#define WIN_WIDTH       900.f
+#define WIN_WIDTH       300.f
 #define WIN_HEIGHT      WIN_WIDTH
 #define CIRCLE_RAD      ((WIN_WIDTH / 3) / 2)
 #define RECT_WIDTH      (WIN_WIDTH / 3)
@@ -19,19 +19,19 @@ using namespace sf;
 Vector2f coords[] =
 {
     // first row
-    Vector2f(0.f, 0.f),
-    Vector2f(300.f, 0.f),
-    Vector2f(600.f, 0.f),
+    Vector2f(RECT_WIDTH * 0, RECT_WIDTH * 0),
+    Vector2f(RECT_WIDTH * 1, RECT_WIDTH * 0),
+    Vector2f(RECT_WIDTH * 2, RECT_WIDTH * 0),
 
     //second row
-    Vector2f(0.f, 300.f),
-    Vector2f(300.f, 300.f),
-    Vector2f(600.f, 300.f),
+    Vector2f(RECT_WIDTH * 0, RECT_WIDTH * 1),
+    Vector2f(RECT_WIDTH * 1, RECT_WIDTH * 1),
+    Vector2f(RECT_WIDTH * 2, RECT_WIDTH * 1),
 
     //third row
-    Vector2f(0.f, 600.f),
-    Vector2f(300.f, 600.f),
-    Vector2f(600.f, 600.f),    
+    Vector2f(RECT_WIDTH * 0, RECT_WIDTH * 2),
+    Vector2f(RECT_WIDTH * 1, RECT_WIDTH * 2),
+    Vector2f(RECT_WIDTH * 2, RECT_WIDTH * 2),
 };
 const size_t coords_len = sizeof(coords) / sizeof(Vector2f);
 
@@ -74,7 +74,7 @@ int main()
         window.draw(rect);        
         circle.setPosition(coords[coord_idx]);
         window.draw(circle);
-        
+
         window.display();
     }
 
